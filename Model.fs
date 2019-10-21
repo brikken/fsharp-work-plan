@@ -14,7 +14,7 @@ type JobId = JobId of int
 type DayConvention = WorkDays | Weekends
 type JobSchedule = Daily of DayConvention | Monthly
 type JobDue = DueDay of DayConvention * int | DuePeriod of DayConvention * int * int
-type DueDay = DueWorkDay of Day | DuWeekendDay of Day
+type DueDay = DueWorkDay of Day | DueWeekendDay of Day
 type JobDefinition = {
     jobId: JobId
     jobName: string
