@@ -34,16 +34,12 @@ type Assignment = {
 type PropertyFilter<'T> = Any | Only of 'T list
 type Filter = { jobIds: PropertyFilter<JobId>; asOfs: PropertyFilter<AsOf>; assignees: PropertyFilter<Assignee>; dueDays: PropertyFilter<Day>; }
 type Dimension = JobDimension | PersonDimension | AsOfDayDimension | AsOfMonthDimension | DueDayDimension // Type of dimension manages partitioning (incl. filtering of (potential) assignments)
-// TODO: Are these partition filters sufficient to determine candidate assignments?
-type JobPartition = { job: JobId; filter: Filter; }
-type DayPartition = { day: Day; filter: Filter; }
-type MonthPartition = { month: Month; filter: Filter; }
-type AssigneePartition = { assignee: Assignee; filter: Filter; }
+type DimensionPartition<'T> = { item: 'T; filter: Filter; }
 type DimensionPartitioned =
-    | JobPartitioned of JobPartition list
-    | DayPartitioned of DayPartition list
-    | MonthPartitioned of MonthPartition list
-    | AssigneePartitioned of AssigneePartition list
+    | JobPartitioned of DimensionPartition<JobId> list
+    | DayPartitioned of DimensionPartition<Day> list
+    | MonthPartitioned of DimensionPartition<Month> list
+    | AssigneePartitioned of DimensionPartition<Assignee> list
 type PartitionAssignments = DimensionPartitioned -> Assignment list -> Assignment list list
 module Table =
     module Cell =
